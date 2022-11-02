@@ -14,7 +14,7 @@ jobs:
         with:
           fetch-depth: 0
           ref: "vercel-deployment"
-          token: ${{ secrets.GITHUB_PAT }}
+          token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
 
       # reset the deployment branch to the main branch
       - name: Commit report
