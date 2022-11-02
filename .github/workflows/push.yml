@@ -1,0 +1,23 @@
+name: Compile + Lint
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  push-to-deployment-branch:
+    runs-on: ubuntu-latest
+    steps:
+      # checkout the deployment branch
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: "vercel-deployment"
+          token: ${{ secrets.GITHUB_PAT }}
+
+      # reset the deployment branch to the main branch
+      - name: Commit report
+        run: |
+          git reset --hard origin/main
+          git push origin vercel-deployment --force
