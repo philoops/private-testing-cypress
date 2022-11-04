@@ -8,16 +8,30 @@ on:
 jobs:
   push-to-deployment-branch:
     runs-on: ubuntu-latest
+
     steps:
       # checkout the deployment branch
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
           ref: "vercel-deployment"
-          token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
 
-      # reset the deployment branch to the main branch
+      # merge the main branch into the deployment branch
       - name: Commit report
         run: |
-          git reset --hard origin/main
-          git push origin vercel-deployment --force
+          git merge origin/main
+          git push origin vercel-deployment
+
+    # steps:
+    #   # checkout the deployment branch
+    #   - uses: actions/checkout@v3
+    #     with:
+    #       fetch-depth: 0
+    #       ref: "vercel-deployment"
+    #       token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+
+    #   # reset the deployment branch to the main branch
+    #   - name: Commit report
+    #     run: |
+    #       git reset --hard origin/main
+    #       git push origin vercel-deployment --force
